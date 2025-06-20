@@ -64,14 +64,16 @@ def destory_local(password: str):
         print(target_dir, password)
         print(list(map(int, target_dir.encode())))
         print(list(map(int, "/Users/geniee/Desktop".encode())))
-        return subprocess.run(
+        res = subprocess.run(
             "sudo -S ls " + target_dir,
             shell=True,
             check=True,
             input=password,
             encoding="utf-8",
             stdout=subprocess.PIPE,
-        ).stdout.split("\n")
+        )
+        print(res.returncode)
+        return res.stdout.split("\n")
 
     for item in CAN_FORMAT_DIRS:
         target_dir = os.path.join(home_dir, item)
