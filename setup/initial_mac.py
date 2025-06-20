@@ -140,7 +140,7 @@ def install_vscode(password: str):
 
 def install_docker(password: str):
     subprocess.run(
-        "sudo -S rm -rf /Applications/Rancher\ Desktop.app",
+        "sudo -S rm -rf /Applications/Rancher\\ Desktop.app",
         shell=True,
         check=True,
         input=password.encode(),
