@@ -24,6 +24,8 @@ def check_sudo_password(password: str) -> bool:
 
 
 def f(password):
+    home_dir = os.environ["HOME"]
+
     def get_remove_items(target_dir: str) -> list[str]:
         return subprocess.run(
             f"sudo -S ls {target_dir}",
@@ -34,7 +36,7 @@ def f(password):
             stdout=subprocess.PIPE,
         ).stdout.split("\n")
 
-    print(get_remove_items(os.path.join(os.environ["HOME"], "Desktop")))
+    print(get_remove_items(os.path.join(home_dir, "Desktop")))
 
 
 def main():
