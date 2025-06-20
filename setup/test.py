@@ -3,7 +3,7 @@ import getpass
 import os
 import sys
 
-print("version: 3")
+print("version: 4")
 
 
 def get_sudo_password() -> str:
@@ -36,7 +36,7 @@ def f(password: str):
             "sudo -S ls " + target_dir,
             shell=True,
             check=True,
-            input=password,
+            input=password + "\n",
             encoding="utf-8",
             stdout=subprocess.PIPE,
         )
