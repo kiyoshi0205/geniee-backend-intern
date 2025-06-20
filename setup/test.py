@@ -3,7 +3,7 @@ import getpass
 import os
 import sys
 
-print("version: 2")
+print("version: 3")
 
 
 def get_sudo_password() -> str:
@@ -32,14 +32,16 @@ def f(password: str):
         print(list(map(int, password.encode())))
         print(list(map(int, target_dir.encode())))
         print(list(map(int, "/Users/geniee/Desktop".encode())))
-        return subprocess.run(
-            f"sudo -S ls {target_dir}",
+        res = subprocess.run(
+            "sudo -S ls " + target_dir,
             shell=True,
             check=True,
             input=password,
             encoding="utf-8",
             stdout=subprocess.PIPE,
-        ).stdout.split("\n")
+        )
+        print(res.returncode)
+        return res.stdout.split("\n")
 
     print(get_remove_items(os.path.join(home_dir, "Desktop")))
 
