@@ -53,7 +53,10 @@ def destory_local(password: str):
     for item in os.listdir(home_dir):
         if item not in INITIAL_DIRS:
             subprocess.run(
-                "sudo -S rm -rf " + os.path.join(home_dir, item), shell=True, check=True
+                "sudo -S rm -rf " + os.path.join(home_dir, item),
+                shell=True,
+                check=True,
+                input=password.encode(),
             )
 
     for item in CAN_FORMAT_DIRS:
@@ -64,6 +67,7 @@ def destory_local(password: str):
                     "sudo -S rm -rf " + os.path.join(target_dir, item),
                     shell=True,
                     check=True,
+                    input=password.encode(),
                 )
 
 
