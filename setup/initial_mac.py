@@ -58,6 +58,8 @@ def destory_local(password: str):
                 check=True,
                 input=password.encode(),
             )
+    
+    print("Removing directories that can be formatted...")
 
     for item in CAN_FORMAT_DIRS:
         target_dir = os.path.join(home_dir, item)
