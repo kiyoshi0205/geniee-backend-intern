@@ -3,7 +3,7 @@ import getpass
 import os
 import sys
 
-print("version: 1")
+print("version: 2")
 
 
 def get_sudo_password() -> str:
