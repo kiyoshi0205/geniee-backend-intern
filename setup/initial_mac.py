@@ -1,5 +1,6 @@
 import getpass
 import os
+import shlex
 import subprocess
 import sys
 
@@ -27,9 +28,6 @@ def check_sudo_password(password: str) -> bool:
 
 
 def destory_local(password: str):
-    def escape_path(path: str) -> str:
-        return path.replace(" ", "\\ ").replace("(", "\\(").replace(")", "\\)")
-
     INITIAL_DIRS = [
         ".Trash",
         "Applications",
@@ -56,20 +54,28 @@ def destory_local(password: str):
     for item in os.listdir(home_dir):
         if item not in INITIAL_DIRS:
             subprocess.run(
-                "sudo -S rm -rf " + os.path.join(home_dir, escape_path(item)),
+                "sudo -S rm -rf " + os.path.join(home_dir, shlex.quote(item)),
                 shell=True,
                 check=True,
                 input=password.encode(),
             )
 
-    print("Removing directories that can be formatted...")
+    def get_remove_items(target_dir: str) -> list[str]:
+        return subprocess.run(
+            f"sudo -S ls {target_dir}",
+            shell=True,
+            check=True,
+            input=password,
+            encoding="utf-8",
+            stdout=subprocess.PIPE,
+        ).stdout.split("\n")
 
     for item in CAN_FORMAT_DIRS:
         target_dir = os.path.join(home_dir, item)
-        for item in os.listdir(target_dir):
+        for item in get_remove_items(target_dir):
             if item != ".localized":
                 subprocess.run(
-                    "sudo -S rm -rf " + os.path.join(target_dir, escape_path(item)),
+                    "sudo -S rm -rf " + os.path.join(target_dir, shlex.quote(item)),
                     shell=True,
                     check=True,
                     input=password.encode(),
