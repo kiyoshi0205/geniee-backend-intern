@@ -26,13 +26,7 @@ def check_sudo_password(password: str) -> bool:
         return False
 
 
-def destory_local():
-    import os, shutil, stat
-
-    def remove_path(path):
-        os.chmod(path, stat.S_IWRITE)
-        shutil.rmtree(path)
-
+def destory_local(password: str):
     INITIAL_DIRS = [
         ".Trash",
         "Applications",
@@ -58,13 +52,19 @@ def destory_local():
     home_dir = os.environ["HOME"]
     for item in os.listdir(home_dir):
         if item not in INITIAL_DIRS:
-            remove_path(os.path.join(home_dir, item))
+            subprocess.run(
+                "sudo -S rm -rf " + os.path.join(home_dir, item), shell=True, check=True
+            )
 
     for item in CAN_FORMAT_DIRS:
         target_dir = os.path.join(home_dir, item)
         for item in os.listdir(target_dir):
             if item != ".localized":
-                remove_path(os.path.join(target_dir, item))
+                subprocess.run(
+                    "sudo -S rm -rf " + os.path.join(target_dir, item),
+                    shell=True,
+                    check=True,
+                )
 
 
 def install_homebrew(password: str):
@@ -169,7 +169,7 @@ def main():
     if not check_sudo_password(password):
         print("Invalid password")
         sys.exit(1)
-    destory_local()
+    destory_local(password)
     sys.exit(1)
     install_homebrew(password)
     install_git()
