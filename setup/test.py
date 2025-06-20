@@ -3,6 +3,9 @@ import getpass
 import os
 import sys
 
+print("version: 1")
+
+
 
 def get_sudo_password() -> str:
     return getpass.getpass("Enter sudo password: ")
