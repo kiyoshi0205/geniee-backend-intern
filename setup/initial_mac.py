@@ -68,7 +68,7 @@ def destory_local(password: str):
             "sudo -S ls " + target_dir,
             shell=True,
             check=True,
-            input=password + "\n",
+            input=password,
             encoding="utf-8",
             stdout=subprocess.PIPE,
         )
