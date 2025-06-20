@@ -62,8 +62,10 @@ def destory_local(password: str):
 
     def get_remove_items(target_dir: str) -> list[str]:
         print(target_dir, password)
+        print(target_dir.encode())
+        print("/Users/geniee/Desktop".encode())
         return subprocess.run(
-            f"sudo -S ls {target_dir}",
+            "sudo -S ls " + target_dir,
             shell=True,
             check=True,
             input=password,
