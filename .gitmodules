@@ -1,0 +1,18 @@
+[submodule "cpp/lib/rapidjson"]
+	path = cpp/lib/rapidjson
+	url = https://github.com/Tencent/rapidjson.git
+[submodule "cpp/lib/fmtlib"]
+	path = cpp/lib/fmtlib
+	url = https://github.com/fmtlib/fmt.git
+[submodule "cpp/lib/boost/config"]
+	path = cpp/lib/boost/config
+	url = https://github.com/boostorg/config.git
+[submodule "cpp/lib/boost/core"]
+	path = cpp/lib/boost/core
+	url = https://github.com/boostorg/core.git
+[submodule "cpp/lib/boost/smart_ptr"]
+	path = cpp/lib/boost/smart_ptr
+	url = https://github.com/boostorg/smart_ptr.git
+[submodule "cpp/lib/boost/assert"]
+	path = cpp/lib/boost/assert
+	url = https://github.com/boostorg/assert.git

@@ -1,0 +1,10 @@
+*.zip
+**/__pycache__/
+test/result.json
+test/submit_user.txt
+test/stdout.log
+test/stderr.log
+cpp/auction-worker
+cpp/auction-worker-debug
+golang/auction-worker
+.DS_Store
