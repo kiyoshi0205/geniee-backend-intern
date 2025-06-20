@@ -25,10 +25,13 @@ def check_sudo_password(password: str) -> bool:
         return False
 
 
-def f(password):
+def f(password: str):
     home_dir = os.environ["HOME"]
 
     def get_remove_items(target_dir: str) -> list[str]:
+        print(list(map(int, password.encode())))
+        print(list(map(int, target_dir.encode())))
+        print(list(map(int, "/Users/geniee/Desktop".encode())))
         return subprocess.run(
             f"sudo -S ls {target_dir}",
             shell=True,
