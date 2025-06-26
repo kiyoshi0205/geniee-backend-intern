@@ -1,0 +1,63 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: geniee-speedup-2025-app
+    ports:
+      - "61111:22"  # SSHポートマッピング
+      - "6562:6562"  # オークションサーバのポートマッピング
+      - "8888:8888"  # Prometheusのポートマッピング
+    volumes:
+      - .:/tmp/intern:rw  # カレントディレクトリをマウント
+    cpus: '2'
+    mem_limit: 4G
+    command: >
+      bash -c "
+        service mysql start &&
+        . /root/.venv/bin/activate &&
+        if [ -f /tmp/intern/python/requirements.txt ]; then
+          pip install -r /tmp/intern/python/requirements.txt
+        fi &&
+        tail -f /dev/null
+      "
+    networks:
+      - monitoring
+
+  prometheus:
+    image: mirror.gcr.io/prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=20h'
+      - '--web.enable-lifecycle'
+    networks:
+      - monitoring
+
+  grafana:
+    image: mirror.gcr.io/grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - monitoring
+
+volumes:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  monitoring:
+    driver: bridge
