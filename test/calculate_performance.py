@@ -50,7 +50,7 @@ def get_language() -> str:
     return mp[language]
 
 
-BASE_URL = "http://35.222.119.33/api/"
+BASE_URL = "http://34.57.193.114/api/"
 
 
 def register_for_dashboard(dataset) -> str:

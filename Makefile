@@ -31,7 +31,7 @@ calc-perf:
 
 archive:
 	zip `make get-submit-user`.zip -r cpp/src golang/ python/ && \
-	curl -X POST -F "file=@`make get-submit-user`.zip" 'http://35.222.119.33/api/upload'
+	curl -X POST -F "file=@`make get-submit-user`.zip" 'http://34.57.193.114/api/upload'
 
 login-mysql:
 	docker exec -it geniee-speedup-2025-app mysql -uroot -pr4RqBb4ZDC6QqVKkuhkQKZZP7zE_9zQ geniee
